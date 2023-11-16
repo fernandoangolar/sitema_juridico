@@ -1,11 +1,12 @@
 <?php 
 
-namespace app\Model\Entity;
+namespace app\Model\DTO;
 
-class Admin 
+class AdminDTO 
 {
     private $id;
     private $nome;
+    private $email;
     private $senha;
 
     public function __construct($id, $nome, $senha)
@@ -29,6 +30,16 @@ class Admin
 
     public function setNome ($nome) {
         $this->nome = $nome;
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function setEmail($email) 
+    {
+        $this->email = $email;
     }
 
     public function getSenha () {

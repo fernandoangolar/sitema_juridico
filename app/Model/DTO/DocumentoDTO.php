@@ -1,8 +1,8 @@
 <?php 
 
-namespace app\Model\Entity;
+namespace app\Model\DTO;
 
-class Documento
+class DocumentoDTO
 {
     private $id;
     private $titulo;

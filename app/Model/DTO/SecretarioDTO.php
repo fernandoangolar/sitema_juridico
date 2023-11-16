@@ -1,18 +1,21 @@
 <?php 
 
-namespace app\Model\Entity;
+namespace app\Model\DTO;
 
-class Secretario 
+class SecretarioDTO 
 {
     private $id;
     private $nome;
     private $cargo;
+    private $email;
+    private $advogados = [];
 
-    public function __construct($id, $nome, $cargo)
+    public function __construct($id, $nome, $cargo, $email)
     {
         $this->id = $id;
         $this->nome = $nome;
         $this->cargo = $cargo;
+        $this->$email = $email;
     }
 
     public function getId () {
@@ -37,5 +40,24 @@ class Secretario
 
     public function setCargo ($cargo) {
         $this->cargo = $cargo;
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function setEmail($email) 
+    {
+        $this->email = $email;
+    }
+
+    public function addAdvogado (AdvogadoDTO $advogado) {
+        $this->advogados [] = $advogado;
+    }
+
+    public function getAdvogado () 
+    {
+        return $this->advogados;
     }
 }

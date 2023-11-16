@@ -1,13 +1,14 @@
 <?php 
 
-namespace app\Model\Entity;
+namespace app\Model\DTO;
 
-class Caso 
+class CasoDTO 
 {
     private $numero_processo;
     private $descricao;
     private $data_abertura;
     private $data_fechamento;
+    private $documentos = [];
 
     public function __construct($numero_processo, $descricao,  $data_abertura, $data_fechamento)
     {
@@ -47,5 +48,15 @@ class Caso
 
     public function setDataFechamento ($data_fechamento) {
         $this->data_fechamento = $data_fechamento;
+    }
+
+    public function addDocumento (DocumentoDTO $documento)
+    {
+        $this->documentos [] = $documento;
+    }
+
+    public function getDocumento ()
+    {
+        return $this->documentos;
     }
 }

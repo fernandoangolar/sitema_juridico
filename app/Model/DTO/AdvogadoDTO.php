@@ -1,18 +1,22 @@
 <?php 
 
-namespace app\Model\Entity;
+namespace app\Model\DTO;
 
-class Advogado 
+
+class AdvogadoDTO 
 {
     private $id;
     private $nome;
     private $especializacao;
+    private $email;
+    private $casos = [];
 
-    public function __construct ($id, $nome, $especializacao)
+    public function __construct ($id, $nome, $especializacao, $email)
     {   
         $this->id = $id;
         $this->nome = $nome;
         $this->especializacao = $especializacao;
+        $this->email = $email;
     }
 
     public function getId () {
@@ -37,5 +41,25 @@ class Advogado
 
     public function setEspecializacao ($especializacao) {
         $this->especializacao = $especializacao;
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function setEmail($email) 
+    {
+        $this->email = $email;
+    }
+
+    public function addCasos (CasoDTO $casos)
+    {
+        $this->casos[] = $casos;
+    }
+
+    public function getCasos ()
+    {
+        return $this->casos;
     }
 }
