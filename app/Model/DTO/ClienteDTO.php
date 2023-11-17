@@ -1,11 +1,12 @@
 <?php 
 
-namespace app\Model\DTO;
+namespace App\Model\DTO;
 
 class ClienteDTO 
 {
     private $id;
     private $nome;
+    private $senha;
     private $bairro;
     private $rua;
     private $cidade;
@@ -13,10 +14,11 @@ class ClienteDTO
     private $casos = [];
     
 
-    public function __construct($id, $nome, $bairro, $rua, $cidade, $email)
+    public function __construct($id, $nome, $senha, $bairro, $rua, $cidade, $email)
     {
         $this->id = $id;
         $this->nome = $nome;
+        $this->senha = $senha;
         $this->bairro = $bairro;
         $this->rua = $rua;
         $this->cidade = $cidade;
@@ -89,5 +91,13 @@ class ClienteDTO
     public function getCasos ()
     {
         return $this->casos;
+    }
+
+    public function getSenha () {
+        return $this->senha;
+    }
+
+    public function setSenha ($senha) {
+        $this->senha = $senha;
     }
 }
