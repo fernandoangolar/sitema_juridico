@@ -1,19 +1,20 @@
 <?php 
 
-namespace app\Model\DTO;
 
 class SecretarioDTO 
 {
     private $id;
     private $nome;
+    private $senha;
     private $cargo;
     private $email;
     private $advogados = [];
 
-    public function __construct($id, $nome, $cargo, $email)
+    public function __construct($id, $nome, $senha, $cargo, $email)
     {
         $this->id = $id;
         $this->nome = $nome;
+        $this->senha = $senha;
         $this->cargo = $cargo;
         $this->$email = $email;
     }
@@ -59,5 +60,13 @@ class SecretarioDTO
     public function getAdvogado () 
     {
         return $this->advogados;
+    }
+
+    public function getSenha () {
+        return $this->senha;
+    }
+
+    public function setSenha ($senha) {
+        $this->senha = $senha;
     }
 }

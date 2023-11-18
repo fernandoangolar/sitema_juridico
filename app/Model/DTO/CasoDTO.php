@@ -1,7 +1,5 @@
 <?php 
 
-namespace app\Model\DTO;
-
 class CasoDTO 
 {
     private $numero_processo;

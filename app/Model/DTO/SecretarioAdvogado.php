@@ -1,6 +1,5 @@
 <?php 
 
-namespace app\Model\DTO;
 
 class SecretarioAvogado 
 {
