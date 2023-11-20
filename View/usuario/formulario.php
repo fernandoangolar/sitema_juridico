@@ -9,9 +9,9 @@
 <body>
     <h1>Inserir Usuário</h1>
     <!-- Formulário de inserção do usuário -->
-    <form action="/usuario/create" method="post">
-        <label for="nome">Nome:</label>
-        <input type="text" name="nome" required><br>
+    <form action="/apps/create" method="post">
+        <label for="name">Nome:</label>
+        <input type="text" name="name" required><br>
 
         <label for="email">Email:</label>
         <input type="email" name="email" required><br>

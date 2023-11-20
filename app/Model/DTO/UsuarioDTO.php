@@ -1,10 +1,9 @@
 <?php 
 
-
 class UsuarioDTO
 {
     private $id;
-    private $nome;
+    private $name;
     private $email;
     private $senha;
 
@@ -31,12 +30,12 @@ class UsuarioDTO
         $this->id = $id;
     }
 
-    public function getNome () {
-        return $this->nome;
+    public function getName () {
+        return $this->name;
     }
 
-    public function setNome ($nome) {
-        $this->nome = $nome;
+    public function setName ($name) {
+        $this->name = $name;
     }
 
     public function getEmail()
@@ -56,4 +55,9 @@ class UsuarioDTO
     public function setSenha ($senha) {
         $this->senha = $senha;
     }
+    
+    public function getSenhaHash() {
+        return $this->senha;
+    }
+
 }

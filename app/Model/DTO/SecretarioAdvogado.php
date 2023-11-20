@@ -1,5 +1,9 @@
 <?php 
 
+<<<<<<< HEAD
+=======
+namespace App\Model\DTO;
+>>>>>>> 0d78d048c9679768addf2688771d5d00d3fde26c
 
 class SecretarioAvogado 
 {

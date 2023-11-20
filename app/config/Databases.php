@@ -1,6 +1,8 @@
 <?php 
 
-class Database {
+
+class Databases 
+{
     private static $conn;
 
     private function __construct() {}

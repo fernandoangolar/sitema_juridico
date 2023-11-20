@@ -1,5 +1,6 @@
 <?php
 
+require_once __DIR__ . '/../../config/Databases.php';
 require_once __DIR__ . '/../DTO/UsuarioDTO.php';
 
 class UsuarioDAO 
@@ -8,103 +9,62 @@ class UsuarioDAO
 
     public function __construct()
     {
-        $this->conn =  Database::getConnection();
+        $this->conn =  Databases::getConnection();
     }
 
-
-    public function insert (UsuarioDTO $usuario)
-    {
-
+    public function create (UsuarioDTO $usuarioDTO) {
         try {
-            if ( $this->emailExiste($usuario->getEmail()) ) 
-            {
+            // Verificar se o e-mail já existe no banco de dados
+            $stmtCheck = $this->conn->prepare("SELECT COUNT(*) FROM usuarios WHERE email = ?");
+            $email = $usuarioDTO->getEmail();
+            $stmtCheck->bindParam(1, $email);
+            $stmtCheck->execute();
+    
+            if ($stmtCheck->fetchColumn() > 0) {
+                // O e-mail já está em uso, retornar falso
+                echo "Erro ao criar usuário: E-mail já está em uso.";
                 return false;
             }
+    
+            // Preparar a consulta SQL para inserção
+            $stmt = $this->conn->prepare("INSERT INTO usuarios (name, email, senha) VALUES (?, ?, ?)");
+            $name = $usuarioDTO->getName();
 
-            $stmt = $this->conn->prepare("INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?) ");
-            $stmt->bind_param("sss", $usuario->getNome(), $usuario->getEmail(), $usuario->getSenha());
-
-            return $stmt->execute();
-        } catch (\Throwable $th ) 
-        {
-            error_log("Erro na execução do código: " . $th->getMessage());
-        }
-      
-    }
-
-    public function getById ($id)
-    {
-        try {
-            $stmt = $this->conn->prepare("SELECT * FROM usuarios WHERE id_usuario = ?");
-            $stmt->bind_parem("i", $id);
-
-            $result = $stmt->get_result();
-            return $result->fetch_assoc();
-        } catch (\Throwable $th)
-        {
-            error_log("Erro na execução do código: " . $th->getMessage());
+            // Vincular os parâmetros
+            $stmt->bindParam(1, $name);
+            $stmt->bindParam(2, $email);
+    
+            // Hash da senha antes de armazenar no banco de dados
+            $hashedPassword = password_hash($usuarioDTO->getSenha(), PASSWORD_DEFAULT);
+            $stmt->bindParam(3, $hashedPassword);
+    
+            // Executar a consulta
+            $stmt->execute();
+    
+            return true;
+        } catch (PDOException $e) {
+            // Em caso de erro, exibir mensagem e retornar falso
+            echo "Erro ao criar usuário: " . $e->getMessage();
+            return false;
         }
     }
 
-    public function update (UsuarioDTO $usuario)
+    public function getAllUsers()
     {
-        try {
-
-            if ( $this->emailExiste($usuario->getEmail(), $usuario->getId()) ) 
-            {
-                return false;
-            }
-
-            $stmt = $this->conn->prepare("UPDATE usuarios SET nome = ?, email = ?, senha = ? WHERE id_usuario = ?");
-            $stmt->bind_param("sssi", $usuario->getNome(), $usuario->getEmail(), $usuario->getSenha(), $usuario->getId());
-
-            return $stmt->execute();
-        } catch (\Throwable $th )
-        {
-            error_log("Erro na execução do código: " . $th->getMessage());
-        }
-    }
-
-    public function detele ($id)
-    {
-        try 
-        {
-            $stmt = $this->conn->prepare("DELETE FROM usuarios WHERE id_usuario = >");
-            $stmt->bind_param("i", $id);
-
-            return $stmt->execute();
-        } catch (\Throwable $th)
-        {
-            error_log("Erro na execução do código: " . $th->getMessage());
-        }
-    }
-
-
-    private function emailExiste ( $email, $excludeId = null )
-    {
-        $stmt = null;
-        if ( $excludeId )
-        {
-            $stmt = $this->conn->prepare("SELECT COUNT(*) as count FROM usuarios WHERE email = ? AND id != ? ");
-            $stmt->bind_param("si", $email, $excludeId);
-        } else 
-        {
-            $stmt = $this->conn->prepare("SELECT COUNT(*) as count FROM usuarios WHERE email = ?");
-            $stmt->bind_param("s", $email);
-        }
-
-
-        // $stmt->execute();: Executa a consulta preparada, onde $stmt é um objeto da classe mysqli_stmt que representa uma declaração SQL preparada.
-
-        // $result = $stmt->get_result();: Obtém o resultado da consulta executada como um objeto mysqli_result. Este objeto contém os dados retornados pela consulta.
-
-        // $count = $result->fetch_assoc()['count'];: Obtém uma linha do resultado como uma matriz associativa e, em seguida, acessa o valor associado à chave 'count'. Geralmente, essa chave é um alias ou o nome da coluna que contém a contagem de resultados.
-
-        // return $count > 0;: Retorna true se a contagem de registros (usuários) com o e-mail fornecido for maior que zero, indicando que o e-mail já existe na tabela. Caso contrário, retorna false, indicando que o e-mail ainda não foi registrado.
+        $stmt = $this->conn->prepare("SELECT * FROM usuarios");
         $stmt->execute();
-        $result = $stmt->get_result();
-        $count = $result->fetch_assoc()['count'];
 
-        return $count > 0;
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getByEmail($email)
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM usuarios WHERE email = ?");
+        $stmt->bindParam(1, $email);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_OBJ);
+    }
+  
+
 }

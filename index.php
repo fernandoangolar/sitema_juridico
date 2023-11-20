@@ -1,6 +1,6 @@
 <?php 
 
-require_once __DIR__ . "/app/config/Databases.php";
+// require_once __DIR__ . "/app/config/Databases.php";
 require_once __DIR__ . "/app/router/Router.php";
 require_once __DIR__ . "/app/core/Core.php";
 
