@@ -15,10 +15,8 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    
                     <th>Nome</th>
                     <th>E-mail</th>
-                    <!-- Adicione outras colunas conforme necessário -->
                 </tr>
             </thead>
             <tbody>
@@ -26,7 +24,6 @@
                     <tr>
                         <td><?php echo $usuario['name']; ?></td>
                         <td><?php echo $usuario['email']; ?></td>
-                        <!-- Adicione outras colunas conforme necessário -->
                     </tr>
                 <?php endforeach; ?>
             </tbody>

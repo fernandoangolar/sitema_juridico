@@ -14,36 +14,29 @@ class UsuarioDAO
 
     public function create (UsuarioDTO $usuarioDTO) {
         try {
-            // Verificar se o e-mail já existe no banco de dados
             $stmtCheck = $this->conn->prepare("SELECT COUNT(*) FROM usuarios WHERE email = ?");
             $email = $usuarioDTO->getEmail();
             $stmtCheck->bindParam(1, $email);
             $stmtCheck->execute();
     
             if ($stmtCheck->fetchColumn() > 0) {
-                // O e-mail já está em uso, retornar falso
                 echo "Erro ao criar usuário: E-mail já está em uso.";
                 return false;
             }
     
-            // Preparar a consulta SQL para inserção
             $stmt = $this->conn->prepare("INSERT INTO usuarios (name, email, senha) VALUES (?, ?, ?)");
             $name = $usuarioDTO->getName();
 
-            // Vincular os parâmetros
             $stmt->bindParam(1, $name);
             $stmt->bindParam(2, $email);
     
-            // Hash da senha antes de armazenar no banco de dados
             $hashedPassword = password_hash($usuarioDTO->getSenha(), PASSWORD_DEFAULT);
             $stmt->bindParam(3, $hashedPassword);
     
-            // Executar a consulta
             $stmt->execute();
     
             return true;
         } catch (PDOException $e) {
-            // Em caso de erro, exibir mensagem e retornar falso
             echo "Erro ao criar usuário: " . $e->getMessage();
             return false;
         }

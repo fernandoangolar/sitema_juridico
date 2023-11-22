@@ -19,7 +19,6 @@ class UsuarioController
             $email = isset($_POST['email']) ? $_POST['email'] : null;
             $senha = isset($_POST['senha']) ? $_POST['senha'] : null;
 
-            // Validar os dados do formulário (adapte conforme necessário)
             if (empty($name) || empty($email) || empty($senha)) {
                 echo "Falha ao criar usuário: Preencha todos os campos.";
                 return;
@@ -45,41 +44,35 @@ class UsuarioController
         }
     }
 
-    public function showform()
-    {
-        // Aqui você renderizaria a view do formulário
-        include './View/usuario/formulario.php';
-    }
-
-    public function login()
+    public function login ()
     {
         $email = isset($_POST['email']) ? $_POST['email'] : null;
         $senha = isset($_POST['senha']) ? $_POST['senha'] : null;
 
-        // Validação básica
         if (empty($email) || empty($senha)) {
             echo "Erro ao fazer login: Preencha todos os campos.";
             return;
         }
 
-        // Verificar se o usuário existe no banco de dados
         $usuarioDAO = new UsuarioDAO();
         $usuario = $usuarioDAO->getByEmail($email);
 
-        if ($usuario && password_verify($senha, $usuario->senha())) {
-           echo "Foi";
+        if ($usuario && password_verify($senha, $usuario->senha)) {
+            header('location: /apps/');
             exit();
         } else {
-            // Exiba mensagem de erro ou redirecione de volta para o formulário de login
             header('Location: /login?error=1');
             exit();
         }
     }   
 
+    public function showform()
+    {
+        include './View/usuario/formulario.php';
+    }
 
     public function showLoginForm()
     {
-        // Aqui você renderizaria a view do formulário de login
         include './View/usuario/formulario_login.php';
     }
 
