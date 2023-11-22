@@ -51,10 +51,10 @@ class UsuarioController
         include './View/usuario/formulario.php';
     }
 
-    public function login($user)
+    public function login()
     {
-        $email = isset($user['email']) ? $user['email'] : null;
-        $senha = isset($user['senha']) ? $user['senha'] : null;
+        $email = isset($_POST['email']) ? $_POST['email'] : null;
+        $senha = isset($_POST['senha']) ? $_POST['senha'] : null;
 
         // Validação básica
         if (empty($email) || empty($senha)) {
@@ -66,10 +66,8 @@ class UsuarioController
         $usuarioDAO = new UsuarioDAO();
         $usuario = $usuarioDAO->getByEmail($email);
 
-        if ($usuario && password_verify($senha, $usuario->getSenha())) {
-            // Login bem-sucedido
-            // Redirecione para a página inicial ou para onde desejar
-            header('Location: /');
+        if ($usuario && password_verify($senha, $usuario->senha())) {
+           echo "Foi";
             exit();
         } else {
             // Exiba mensagem de erro ou redirecione de volta para o formulário de login

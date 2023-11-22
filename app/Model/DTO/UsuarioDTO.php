@@ -5,7 +5,7 @@ class UsuarioDTO
     private $id;
     private $name;
     private $email;
-    private $senha;
+    public $senha;
 
     public function __construct()
     {
