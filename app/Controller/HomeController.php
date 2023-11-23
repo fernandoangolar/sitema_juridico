@@ -13,7 +13,6 @@ class HomeController
 
             $content = "Bem-vindo, $userName! Esta é a página inicial do Sistema Jurídico.";
         } else {
-            // $content = "Usuário não autenticado";
             header('Location: /apps/login');
             exit();
         }

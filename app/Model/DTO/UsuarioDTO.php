@@ -6,6 +6,9 @@ class UsuarioDTO
     public $name;
     public $email;
     public $senha;
+    public $user_type;
+    public $created_at;
+    public $updated_at;
 
     public function __construct()
     {

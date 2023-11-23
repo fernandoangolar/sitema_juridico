@@ -61,14 +61,17 @@ class UsuarioController
         
 
         if ($usuario && password_verify($senha, $usuario->senha)) {
+            $userType = $this->determineUserType($usuario);
 
             $_SESSION['user'] = [
                 'id' => $usuario->id,
                 'name' => $usuario->name,
-                'email' => $usuario->email
+                'email' => $usuario->email,
+                'type' => $usuario->user_type
             ];
 
-            header('location: /apps/');
+            $base_url = "/apps";
+            header("Location: {$base_url}/{$userType}/dashboard");
             exit();
         } else {
             header('Location: /login?error=1');
@@ -84,6 +87,20 @@ class UsuarioController
 
         header('Location: /apps/login');
         exit();
+    }
+
+    public function determineUserType ($usuario) 
+    {
+        $userType = $usuario->user_type;
+        if ($userType == 'admin') {
+            header('Location: /apps/admin/dashboard');
+        } elseif ($userType == 'advogado') {
+            header('Location: /apps/advogado/dashboard');
+        } elseif ($userType == 'secretario') {
+            header('Location: /apps/secretario/dashboard');
+        }
+
+        return $userType;
     }
 
     public function showform()

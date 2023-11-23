@@ -8,5 +8,9 @@ $routes = [
     '/doLogin' => 'UsuarioController@login',   
     '/users' => 'usuarioController@showUserDetails',
     '/logout' => 'UsuarioController@logout',
+    '/admin/dashboard' => 'AdminController@dashboard',
+    '/advogado/dashboard' => 'AdvogadoController@dashboard',
+    '/cliente/dashboard' => 'ClienteController@dashboard',
+    '/secretario/dashboard' => 'SecretarioController@dashboard',
 ];
 
