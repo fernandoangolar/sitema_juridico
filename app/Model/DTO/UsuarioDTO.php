@@ -2,9 +2,9 @@
 
 class UsuarioDTO
 {
-    private $id;
-    private $name;
-    private $email;
+    public $id;
+    public $name;
+    public $email;
     public $senha;
 
     public function __construct()

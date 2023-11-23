@@ -34,7 +34,7 @@ class UsuarioController
         
             if ($success)
             {
-                echo "Usuário criado com sucesso";
+                header('location: /apps/users');
             } else
             {
                 echo "Falha ao criar usuário";
@@ -46,6 +46,8 @@ class UsuarioController
 
     public function login ()
     {
+
+        session_start();
         $email = isset($_POST['email']) ? $_POST['email'] : null;
         $senha = isset($_POST['senha']) ? $_POST['senha'] : null;
 
@@ -56,8 +58,16 @@ class UsuarioController
 
         $usuarioDAO = new UsuarioDAO();
         $usuario = $usuarioDAO->getByEmail($email);
+        
 
         if ($usuario && password_verify($senha, $usuario->senha)) {
+
+            $_SESSION['user'] = [
+                'id' => $usuario->id,
+                'name' => $usuario->name,
+                'email' => $usuario->email
+            ];
+
             header('location: /apps/');
             exit();
         } else {
@@ -65,6 +75,16 @@ class UsuarioController
             exit();
         }
     }   
+
+    public function logout () 
+    {
+        session_start();
+        session_unset();
+        session_destroy();
+
+        header('Location: /apps/login');
+        exit();
+    }
 
     public function showform()
     {
