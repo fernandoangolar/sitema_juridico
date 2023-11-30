@@ -144,7 +144,7 @@
                 <!-- Links para Redefinir Senha e Registrar -->
                 <div class="links">
                     <a href="/apps/resetarSenha" class="btn btn-secondary">Esqueceu a senha?</a>
-                    <a href="/apps/registrar" class="btn btn-secondary">Registrar</a>
+                    <a href="/apps/showform" class="btn btn-secondary">Registrar</a>
                 </div>
             </div>
         </div>
@@ -153,5 +153,7 @@
     <!-- Adicione os scripts do Bootstrap (jQuery, Popper.js e Bootstrap) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-sqQrGBGo9sAQF9T3x2EByXuJdZIbPTrpZC94FJ+3DEr0L+8rXZ2u5pG70/HiiEAg" crossorigin="anonymous"></script>
-    <script src="
+    <script src=""> </script>
+</body>
+</html>
 

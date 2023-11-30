@@ -34,7 +34,7 @@ class UsuarioController
         
             if ($success)
             {
-                header('location: /apps/users');
+                header('location: /apps/showform');
             } else
             {
                 echo "Falha ao criar usuário";

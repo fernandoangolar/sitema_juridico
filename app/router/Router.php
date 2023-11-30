@@ -12,5 +12,7 @@ $routes = [
     '/advogado/dashboard' => 'AdvogadoController@dashboard',
     '/cliente/dashboard' => 'ClienteController@dashboard',
     '/secretario/dashboard' => 'SecretarioController@dashboard',
+    '/adicionar-caso' => 'CasoController@create',
+    '/adicionar-documento' => 'Documento@create'
 ];
 
