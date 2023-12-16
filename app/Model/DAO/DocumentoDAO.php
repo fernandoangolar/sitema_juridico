@@ -14,16 +14,19 @@ class DocumentoDAO
 
     public function saveDocumento(DocumentoDTO $documentoDTO) {
         try {
+         
+            
             $stmt = $this->conn->prepare("INSERT INTO documentos (titulo, tipo) VALUES (?, ?)");
             $titulo = $documentoDTO->getTitulo();
             $tipo = $documentoDTO->getTipo();
-
             $stmt->bindParam(1, $titulo);
             $stmt->bindParam(2, $tipo);
-            $stmt->execute();
 
+            return $stmt->execute();
+            
         } catch (PDOException $e) {
             echo "Erro ao associar documento ao caso: " . $e->getMessage();
+            return false;
         }
     }
 

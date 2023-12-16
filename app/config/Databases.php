@@ -12,7 +12,7 @@ class Databases
             // Configurações do banco de dados (substitua com as suas configurações)
             $host = 'localhost';
             $usuario = 'root';
-            $senha = '';
+            $senha = 'password';
             $banco = 'sistema_juridico';
 
             $dsn = "mysql:host=$host;dbname=$banco;charset=utf8";

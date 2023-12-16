@@ -34,7 +34,6 @@ class UsuarioDAO
             $stmt->bindParam(3, $hashedPassword);
     
             $stmt->execute();
-           
 
             $userType = $this->determineUserType($usuarioDTO);
             $this->updateUseuType($usuarioDTO->getEmail(), $userType);
@@ -48,7 +47,7 @@ class UsuarioDAO
         }
     }
 
-    private function determineUserType(UsuarioDTO $usuarioDTO) 
+    private function determineUserType(UsuarioDTO $usuarioDTO)
     {
         if (strpos($usuarioDTO->getEmail(), 'admin') !== false ) {
             return 'admin';
@@ -86,6 +85,5 @@ class UsuarioDAO
 
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
-  
 
 }

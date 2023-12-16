@@ -1,26 +1,75 @@
-<?php 
 
-        require_once __DIR__ . '/../../app/Model/DAO/DocumentoDAO.php';
+<?php
 
-            $docDAO = new DocumentoDAO();
+    $casoController = new CasoController();
+    $documentosDoBanco =$casoController->getDocumentoDAO()->getAllDocumentos();
 
-            $documentos = $docDAO->getAllDocumentos();
-    ?>
-
+    if (is_string($documentosDoBanco)) {
+        $documentosDoBanco = json_decode($documentosDoBanco, true);
+    }
+?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navbar Exemplo</title>
-    <!-- Adicione o link para o Bootstrap -->
+    <title>DashBord Secretario</title>
+    
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyWLgyA8d6NT5lZ+qhrq0LsUd8t5I9aP" crossorigin="anonymous">
     <style>
-       body {
-            background-color: #f8f9fa;
-            padding-top: 56px; 
+       
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa; 
+            margin: 0;
         }
+
+        .form-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        textarea.form-control,
+        input.form-control {
+            border: 1px solid #ced4da; 
+            border-radius: 5px;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            margin-top: 5px;
+            outline: none;
+        }
+
+        textarea.form-control:focus,
+        input.form-control:focus {
+            border-color: #007bff; 
+        }
+
+        
+        button.btn-primary {
+            background-color: #007bff; 
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: #ffffff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button.btn-primary:hover {
+            background-color: #0056b3;
+        }
+
 
         .navbar {
             padding: 15px;
@@ -69,9 +118,6 @@
             z-index: 1000;
         }
 
-       
-
-
         .navbar-nav .nav-link:hover {
             color: #ffffff !important;
         }
@@ -96,6 +142,19 @@
             background-color: #c82333;
         }
 
+        .form-group {
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        #documento {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .btn-primary {
+            margin-top: 10px;
+        }
     </style>
 
    
@@ -110,40 +169,52 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#" onclick="showForm('casos')">Adicionar Casos</a>
+                    <a class="nav-link" href="#" onclick="showForm('casosForm')">Adicionar Casos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" onclick="showForm('documentos')">Adicionar Documentos</a>
+                    <a class="nav-link" href="#" onclick="showForm('documentosForm')">Adicionar Documentos</a>
                 </li>
             </ul>
         </div>
     </nav>
 
-    <div id="casosForm" class="form-container text-center">
+    <div id="casosForm" class="form-container text-center my-5">
         <h2>Formulário de Adicionar Casos</h2>
         <form action="/apps/adicionar-caso" method="post">
             <div class="form-group">
-                <label for="descricao">Descrição:</label>
-                <textarea class="form-control" id="descricao" name="descricao" rows="5" required></textarea>
+                <textarea class="form-control rounded-0" id="descricao" name="descricao" rows="5" placeholder="Digite a descrição" required></textarea>
             </div>
             <br>
+            <br>
             <div class="form-group">
-                <label for="documento">Documento:</label>
-                <select class="form-control" id="documento" name="documento">
-                <?php foreach ($documentos as $documento): ?>
-                        <option value="<?= $documento->getId(); ?>"><?= $documento->getTitulo(); ?></option>
+                <select id="documento" name="documento"  class="form-control rounded-0 " aria-placeholder="selecione os seu documento" required>
+                    <option value="" disabled selected>Selecione um documento</option>
+                    <?php foreach ($documentosDoBanco as $documento) : ?>
+                        <option value="<?= $documento['id_documento'] ?>">
+                            <?= $documento['titulo'] ?>
+                        </option>
                     <?php endforeach; ?>
                 </select>
             </div>
             <br>
-            <button type="submit" class="btn btn-primary">Adicionar Caso</button>
+            <br>
+            <button type="submit" class="btn btn-primary">Adicionar Documento</button>
         </form>
     </div>
 
-    <div id="documentosForm" class="form-container text-center">
+    <div id="documentosForm" class="form-container text-center my-5">
         <h2>Formulário de Adicionar Documentos</h2>
-        <form action="/adicionar-documento">
-           
+        <form action="/apps/adicionar-documento" method="post">
+            <div class="form-group">
+                <input type="text" class="form-control rounded-0" id="titulo" name="titulo" placeholder="Digite o titulo do Documento" required>
+            </div>
+            <br>
+            <br>
+            <div class="form-group">
+                <input type="text" class="form-control rounded-0" id="tipo" name="tipo" placeholder="Digite o tipo de Documento" required>
+            </div>
+            <br>
+            <br>
             <button type="submit" class="btn btn-primary">Adicionar Documento</button>
         </form>
     </div>
@@ -162,7 +233,7 @@
                 form.style.display = 'none';
             });
 
-            document.getElementById(formId + 'Form').style.display = 'block';
+            document.getElementById(formId).style.display = 'block';
         }
     </script>
 </body>

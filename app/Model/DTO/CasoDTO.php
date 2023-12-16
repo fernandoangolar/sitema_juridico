@@ -8,12 +8,17 @@ class CasoDTO
     private $data_fechamento;
     private $documentos = [];
 
-    public function __construct($numero_processo, $descricao,  $data_abertura, $data_fechamento)
+    // public function __construct($numero_processo, $descricao,  $data_abertura, $data_fechamento)
+    // {
+    //     $this->numero_processo = $numero_processo;
+    //     $this->descricao = $descricao;
+    //     $this->data_abertura = $data_abertura;
+    //     $this->data_fechamento = $data_fechamento;
+    // }
+
+    public function __construct()
     {
-        $this->numero_processo = $numero_processo;
-        $this->descricao = $descricao;
-        $this->data_abertura = $data_abertura;
-        $this->data_fechamento = $data_fechamento;
+        
     }
 
     public function getNumeroProcesso () {

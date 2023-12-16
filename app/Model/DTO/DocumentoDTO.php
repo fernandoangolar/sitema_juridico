@@ -8,12 +8,17 @@ class DocumentoDTO
     private $data_criacao;
     private $tipo;
 
-    public function __construct($id, $titulo, $data_criacao, $tipo)
+    // public function __construct($id, $titulo, $data_criacao, $tipo)
+    // {
+    //     $this->id = $id;
+    //     $this->titulo = $titulo;
+    //     $this->data_criacao = $data_criacao;
+    //     $this->tipo = $tipo;
+    // }
+
+    public function __construct()
     {
-        $this->id = $id;
-        $this->titulo = $titulo;
-        $this->data_criacao = $data_criacao;
-        $this->tipo = $tipo;
+        
     }
 
     public function getId () {
